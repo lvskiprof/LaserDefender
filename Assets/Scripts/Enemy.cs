@@ -7,7 +7,8 @@ public class Enemy : MonoBehaviour
 	[Header("Enemy")]
     [SerializeField]
     float       health = 100f;
-	[Header("Projectile")]
+
+	[Header("Bomb")]
 	[SerializeField]
 	float       shotCounter;
 	[SerializeField]
@@ -17,7 +18,16 @@ public class Enemy : MonoBehaviour
 	[SerializeField]
 	GameObject  projectile;
 	[SerializeField]
-	float   bombSpeed = -10f;	// Must be negative to go down
+	float		bombSpeed = -10f;   // Must be negative to go down
+
+	[Header("VFX")]
+	[SerializeField]
+	GameObject  explosionVFX;
+	[SerializeField]
+	float       durationOfExplosion = 1f;
+
+	int         shipNumber;
+	int         waveNumber;
 
 	// Start is called before the first frame update
 	void Start()
@@ -36,6 +46,7 @@ public class Enemy : MonoBehaviour
 	***/
 	void OnApplicationQuit()
 	{
+		Debug.Log(GetShipID() + " is being destroyed in Enemy.cs OnApplicationQuit().");
 		Destroy(gameObject);
 	}   // OnApplicationQuit
 
@@ -63,7 +74,7 @@ public class Enemy : MonoBehaviour
 			transform.position,
 			Quaternion.identity) as GameObject; ;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
-		Debug.Log("Bombs away, boss");
+		Debug.Log(GetShipID() + " signals bombs away, boss");
 	}   // Fire()
 
 	/***
@@ -78,7 +89,7 @@ public class Enemy : MonoBehaviour
 		}   // if
 		else
 		{   // It was NULL, so report it as an error for debuggin purposes
-			Debug.Log("In Enemy.cs OnTriggerEnter2D(): DamageDealer was NULL.");
+			Debug.Log(GetShipID() + "in Enemy.cs OnTriggerEnter2D(): DamageDealer was null.");
 		}   // else
 	}   // OnTriggerEnter2D(Collider2D other)
 
@@ -89,11 +100,43 @@ public class Enemy : MonoBehaviour
 	private void ProcessHit(Collider2D other, DamageDealer damageDealer)
 	{
 		health -= damageDealer.GetDamage();
-		Debug.Log("Enemy " + other.gameObject.name + " health is now " + health);
+		Debug.Log(GetShipID() + " health is now " + health);
 		damageDealer.gameObject.SetActive(false);
 		if (health <= 0f)
 		{
-			damageDealer.Hit(gameObject);
+			Die(damageDealer);
 		}   // if
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
+
+	/***
+	*		Die() handles doing the explosion and making the ship inactive so it
+	*	disappears.
+	***/
+	private void Die(DamageDealer damageDealer)
+	{
+		Debug.Log(GetShipID() + " has been destroyed");
+		gameObject.SetActive(false);
+		GameObject explosion = Instantiate(
+					explosionVFX,
+					transform.position,
+					transform.rotation);
+		Destroy(explosion, durationOfExplosion);
+		damageDealer.Hit(gameObject);	// This is a NOP at this point
+	}   // Die()
+
+	/***
+	*		SetShipInfo() saves information we can use to identify this ship for
+	*	Debug.Log() when needed.
+	***/
+	public void SetShipInfo(int number, int wave)
+	{
+		shipNumber = number;
+		waveNumber = wave;
+		Debug.Log(GetShipID() + " info has been set.");
+	}   // SetShipInfo()
+
+	public string GetShipID()
+	{
+		return "Ship " + shipNumber + " from wave " + waveNumber;
+	}   // GetShipID()
 }   // class Enemy

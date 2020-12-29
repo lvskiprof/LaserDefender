@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     float       xPadding = 0.5f;
     [SerializeField]
     float       YPadding = 0.45f;
+
     [Header("Projectile")]
     [SerializeField]
     GameObject laserPrefab;
@@ -20,6 +21,13 @@ public class Player : MonoBehaviour
     float       projectileSpeed = 10f;
     [SerializeField]
     float       projectileFiringPeriod = 0.25f;
+
+    [Header("VFX")]
+    [SerializeField]
+    GameObject  explosionVFX;
+    [SerializeField]
+    float       durationOfExplosion = 1f;
+
     float       xMin;
     float       xMax;
     float       yMin;
@@ -93,12 +101,12 @@ public class Player : MonoBehaviour
                 laserStart,
                 Quaternion.identity) as GameObject;
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
-            Debug.Log("Laser fired, boss");
+            //Debug.Log("Laser fired, boss");
             yield return new WaitForSeconds(projectileFiringPeriod);
             // Things to do afterwards
-            Debug.Log("Checking to see if we should keep firing, boss");
+            //Debug.Log("Checking to see if we should keep firing, boss");
         } while (Input.GetButton("Fire1"));
-        Debug.Log("Firing has ceased, boss");
+        //Debug.Log("Firing has ceased, boss");
     }   //    FireContinuously()
 
     /***
@@ -128,7 +136,23 @@ public class Player : MonoBehaviour
         damageDealer.gameObject.SetActive(false);
         if (health <= 0f)
         {
-            damageDealer.Hit(gameObject);
+            Die(damageDealer);
         }   // if
     }   // ProcessHit(Collider2D other, DamageDealer damageDealer)
+
+    /***
+	*		Die() handles doing the explosion and making the ship inactive so it
+	*	disappears.
+	***/
+    void Die(DamageDealer damageDealer)
+    {
+        Debug.Log("Ship " + gameObject.name + " has been destroyed");
+        GameObject explosion = Instantiate(
+                    explosionVFX,
+                    transform.position,
+                    transform.rotation);
+        Destroy(explosion, durationOfExplosion);
+        gameObject.SetActive(false);
+        damageDealer.Hit(gameObject);   // This is a NOP at this point
+    }	// Die()
 }   // class Player

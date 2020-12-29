@@ -14,6 +14,9 @@ public class EnemyPathing : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		if (waveConfig == null)
+			Debug.Log("waveConfig for " + gameObject.GetComponent<Enemy>().GetShipID() + " is null.");
+
 		waypoints = waveConfig.GetWaypoints();
         transform.position = waypoints[waypointIndex].transform.position;
     }   // Start()
@@ -52,7 +55,9 @@ public class EnemyPathing : MonoBehaviour
 			transform.position = Vector2.MoveTowards(transform.position, targetPosition, movementThisFrame);
 		}   // if
 		else if (waypoints.Count != 1)
-		{	// We only make a ship disappear if it is at the last of multiple waypoints
+		{   // We only make a ship disappear if it is at the last of multiple waypoints
+			Debug.Log(gameObject.GetComponent<Enemy>().GetShipID() +
+				" is being set to inactive.");
 			gameObject.SetActive(false);    // Make is disappear so we can reuse it later
 		}	// else-if
 	}   // Move()

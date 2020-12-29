@@ -103,6 +103,9 @@ MonoBehaviour:
     type: 3}
   projectileSpeed: 20
   projectileFiringPeriod: 0.25
+  explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
+    type: 3}
+  durationOfExplosion: 1
 --- !u!58 &-5946028814265028639
 CircleCollider2D:
   m_ObjectHideFlags: 0

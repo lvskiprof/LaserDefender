@@ -41,7 +41,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 636208267118988037}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c535f01827e7f2b4697db4090a9c9599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 0}
+  waveConfig: {fileID: 11400000, guid: bccc62d6b44c65a4b851e589802f5a49, type: 2}
   waypoints: []
 --- !u!114 &7369850993068724064
 MonoBehaviour:
@@ -117,6 +117,9 @@ MonoBehaviour:
   projectile: {fileID: 7723163494949799297, guid: cde66e9404e968b4dab9168e42415e47,
     type: 3}
   bombSpeed: -10
+  explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
+    type: 3}
+  durationOfExplosion: 1
 --- !u!58 &4651785669573738260
 CircleCollider2D:
   m_ObjectHideFlags: 0

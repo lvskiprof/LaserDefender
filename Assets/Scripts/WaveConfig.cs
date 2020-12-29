@@ -8,15 +8,18 @@ public class WaveConfig : ScriptableObject
 	[SerializeField]
 	GameObject  enemyPrefab;	// Assigned in Inspector, but this removes a warning
 	[SerializeField]
-	GameObject  pathPrefab;  // Assigned in Inspector, but this removes a warning
+	GameObject  pathPrefab;		// Assigned in Inspector, but this removes a warning
 	[SerializeField]
-	float   timeBetweenSpawns = 0.5f;
+	float		timeBetweenSpawns = 0.5f;
 	[SerializeField]
-	float   spawnRandomFactor = 0.3f;
+	float		spawnRandomFactor = 0.3f;
 	[SerializeField]
-	int     numberOfEnemies = 5;
+	int			numberOfEnemies = 5;
 	[SerializeField]
-	float   moveSpeed = 2f;
+	float		moveSpeed = 2f;
+	[SerializeField]
+	int         waveNumber;
+
 	List<GameObject>    enemyShips;
 
 	// OnEnable() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
@@ -32,16 +35,17 @@ public class WaveConfig : ScriptableObject
 					pathPrefab.transform.position,
 					Quaternion.identity);
 
+			enemyShip.GetComponent<Enemy>().SetShipInfo(ship, waveNumber);
 			enemyShips.Add(enemyShip);
 		}   // for
 	}   // OnEnable()
 
 	/***
 	*		OnApplicationQuit() will destroy all the cloned Enemy objects we created.
-	***
+	***/
 	void OnApplicationQuit()
 	{
-		for (int ship = 0; ship < numberOfEnemies; ship++)
+		for (int ship = 0; ship < enemyShips.Count; ship++)
 		{
 			Destroy(enemyShips[ship].gameObject);
 		}   // for
