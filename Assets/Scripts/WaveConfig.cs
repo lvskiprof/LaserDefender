@@ -6,19 +6,19 @@ using UnityEngine;
 public class WaveConfig : ScriptableObject
 {
 	[SerializeField]
-	GameObject  enemyPrefab;	// Assigned in Inspector, but this removes a warning
+	GameObject			enemyPrefab;
 	[SerializeField]
-	GameObject  pathPrefab;		// Assigned in Inspector, but this removes a warning
+	GameObject			pathPrefab;
 	[SerializeField]
-	float		timeBetweenSpawns = 0.5f;
+	float				timeBetweenSpawns = 0.5f;
 	[SerializeField]
-	float		spawnRandomFactor = 0.3f;
+	float				spawnRandomFactor = 0.3f;
 	[SerializeField]
-	int			numberOfEnemies = 5;
+	int					numberOfEnemies = 5;
 	[SerializeField]
-	float		moveSpeed = 2f;
+	float				moveSpeed = 2f;
 	[SerializeField]
-	int         waveNumber;
+	int					waveNumber;
 
 	List<GameObject>    enemyShips;
 
@@ -74,6 +74,7 @@ public class WaveConfig : ScriptableObject
 	public GameObject GetEnemyShip(int ship) 
 	{
 		enemyShips[ship].transform.position = pathPrefab.transform.position;
+		Debug.Log(enemyShips[ship].GetComponent<Enemy>().GetShipID() + " is being enabled.");
 		enemyShips[ship].SetActive(true);	// Make it active now that we are using it
 		return enemyShips[ship];
 	}   // GameObject GetEnemyShip()

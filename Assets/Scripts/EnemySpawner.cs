@@ -11,11 +11,19 @@ public class EnemySpawner : MonoBehaviour
     int                 startingWave = 0;
     [SerializeField]
     bool                looping = false;
-    
+
+    /***
+	*		Cached componenet references.
+	***/
+
+    GameStatus  gameStatus; // GameStatus object for this level the player is on
+    Level       level;      // Level the player is on
     // Start is called before the first frame update
     IEnumerator Start()
     {
-        
+        gameStatus = FindObjectOfType<GameStatus>();
+        level = FindObjectOfType<Level>();
+
         do
         {
             yield return StartCoroutine(SpawnAllWaves());
@@ -46,6 +54,7 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = waveConfig.GetEnemyShip(enemyCount);
             newEnemy.transform.position = waveConfig.GetWaypoints()[0].transform.position;
             newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
+            level.CountEnemies();
             yield return new WaitForSeconds(waveConfig.GetTimeBetweenSpawns());
         }   // for
     }   // IEnumerator SpawnAllEnemiesInWave()

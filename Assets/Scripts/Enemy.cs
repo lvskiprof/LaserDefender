@@ -7,6 +7,8 @@ public class Enemy : MonoBehaviour
 	[Header("Enemy")]
     [SerializeField]
     float       health = 100f;
+	[SerializeField]
+	long        enemyValue = 10;
 
 	[Header("Bomb")]
 	[SerializeField]
@@ -25,6 +27,17 @@ public class Enemy : MonoBehaviour
 	GameObject  explosionVFX;
 	[SerializeField]
 	float       durationOfExplosion = 1f;
+
+	[Header("SFX")]
+	[SerializeField]
+	AudioClip   deathSFX;
+	[SerializeField] [Range(0,1)]
+	float       deathSoundVolume = 0.75f;
+	[SerializeField]
+	AudioClip   bombDropSFX;
+	[SerializeField]
+	[Range(0,1)]
+	float       bombSoundVolume = 0.75f;
 
 	int         shipNumber;
 	int         waveNumber;
@@ -74,6 +87,7 @@ public class Enemy : MonoBehaviour
 			transform.position,
 			Quaternion.identity) as GameObject; ;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
+		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);
 		Debug.Log(GetShipID() + " signals bombs away, boss");
 	}   // Fire()
 
@@ -101,11 +115,13 @@ public class Enemy : MonoBehaviour
 	{
 		health -= damageDealer.GetDamage();
 		Debug.Log(GetShipID() + " health is now " + health);
-		damageDealer.gameObject.SetActive(false);
 		if (health <= 0f)
 		{
 			Die(damageDealer);
 		}   // if
+
+		Debug.Log(damageDealer.gameObject.name + " is being destroyed.");
+		Destroy(damageDealer.gameObject);
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
 	/***
@@ -121,6 +137,7 @@ public class Enemy : MonoBehaviour
 					transform.position,
 					transform.rotation);
 		Destroy(explosion, durationOfExplosion);
+		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);	// This is a NOP at this point
 	}   // Die()
 
@@ -135,8 +152,22 @@ public class Enemy : MonoBehaviour
 		Debug.Log(GetShipID() + " info has been set.");
 	}   // SetShipInfo()
 
+
+	/***
+	*		GetShipID() returns information we can use to identify this ship for
+	*	Debug.Log() when needed.
+	***/
 	public string GetShipID()
 	{
 		return "Ship " + shipNumber + " from wave " + waveNumber;
 	}   // GetShipID()
+
+	/***
+	*		GetShipID() returns information we can use to identify this ship for
+	*	Debug.Log() when needed.
+	***/
+	public long GetEnemyValue()
+	{
+		return enemyValue;
+	}   // GetEnemyValue
 }   // class Enemy

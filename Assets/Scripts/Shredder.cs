@@ -9,6 +9,7 @@ public class Shredder : MonoBehaviour
     ***/
     private void OnTriggerEnter2D(Collider2D collision)
 	{
+        Debug.Log(gameObject.name + "Shredder is destroying " + collision.gameObject.name);
         Destroy(collision.gameObject);  // Disable this laser object
     }   // OnTriggerEnter2D()
 }   // class Shredder

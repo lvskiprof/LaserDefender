@@ -28,6 +28,18 @@ public class Player : MonoBehaviour
     [SerializeField]
     float       durationOfExplosion = 1f;
 
+    [Header("SFX")]
+    [SerializeField]
+    AudioClip   deathSFX;
+    [SerializeField]
+    [Range(0,1)]
+    float       deathSoundVolume = 0.75f;
+    [SerializeField]
+    AudioClip   laserFireSFX;
+    [SerializeField]
+    [Range(0,1)]
+    float       laserSoundVolume = 0.75f;
+
     float       xMin;
     float       xMax;
     float       yMin;
@@ -102,6 +114,7 @@ public class Player : MonoBehaviour
                 Quaternion.identity) as GameObject;
             laser.GetComponent<Rigidbody2D>().velocity = new Vector2(0, projectileSpeed);
             //Debug.Log("Laser fired, boss");
+            AudioSource.PlayClipAtPoint(laserFireSFX, Camera.main.transform.position, laserSoundVolume);
             yield return new WaitForSeconds(projectileFiringPeriod);
             // Things to do afterwards
             //Debug.Log("Checking to see if we should keep firing, boss");
@@ -152,6 +165,7 @@ public class Player : MonoBehaviour
                     transform.position,
                     transform.rotation);
         Destroy(explosion, durationOfExplosion);
+        AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
         gameObject.SetActive(false);
         damageDealer.Hit(gameObject);   // This is a NOP at this point
     }	// Die()

@@ -15,10 +15,14 @@ public class EnemyPathing : MonoBehaviour
     void Start()
     {
 		if (waveConfig == null)
-			Debug.Log("waveConfig for " + gameObject.GetComponent<Enemy>().GetShipID() + " is null.");
-
-		waypoints = waveConfig.GetWaypoints();
-        transform.position = waypoints[waypointIndex].transform.position;
+		{
+			Debug.Log("waveConfig for " + gameObject.GetComponent<Enemy>().GetShipID() + " is null in " + gameObject.name);
+		}
+		else
+		{
+			waypoints = waveConfig.GetWaypoints();
+			transform.position = waypoints[waypointIndex].transform.position;
+		}	// else
     }   // Start()
 
 	// Update is called once per frame
@@ -63,7 +67,8 @@ public class EnemyPathing : MonoBehaviour
 	}   // Move()
 
 	/***
-    *       SetWaypoints() will find all the waypoint objects and add them to the wayppoints List.
+    *       SetWaypoints() will find all the waypoint objects and add them to the
+    *   waypoints List.
     ***/
 	private void SetWaypoints()
     {

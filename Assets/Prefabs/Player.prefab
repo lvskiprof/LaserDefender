@@ -106,6 +106,10 @@ MonoBehaviour:
   explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
     type: 3}
   durationOfExplosion: 1
+  deathSFX: {fileID: 8300000, guid: f717e2d1dfa1bd641822b35693ea64cf, type: 3}
+  deathSoundVolume: 1
+  laserFireSFX: {fileID: 8300000, guid: 875b2e044e1b629478c0616131ac66a1, type: 3}
+  laserSoundVolume: 0.75
 --- !u!58 &-5946028814265028639
 CircleCollider2D:
   m_ObjectHideFlags: 0
