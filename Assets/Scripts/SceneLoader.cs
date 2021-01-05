@@ -26,10 +26,30 @@ public class SceneLoader : MonoBehaviour
 		SceneManager.LoadScene(0);
 	}   // LoadStartScene()
 
-/***
-*       ExitGame() is called to exit the game.  It handles the two cases of
-*   running in standalone mode or in the Unity Editor.
-***/
+	/***
+	*		LoadGameScene() will load the first scene in the Build Settings.
+	***/
+	public void LoadGameScene()
+	{
+		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
+		//gameStatus.ResetScore();
+		SceneManager.LoadScene("Game");
+	}   // LoadGameScene()
+
+	/***
+	*		LoadGameScene() will load the first scene in the Build Settings.
+	***/
+	public void LoadGameOver()
+	{
+		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
+		//gameStatus.ResetScore();
+		SceneManager.LoadScene("GameOver");
+	}   // LoadGameScene()
+
+	/***
+	*       ExitGame() is called to exit the game.  It handles the two cases of
+	*   running in standalone mode or in the Unity Editor.
+	***/
 	public void ExitGame()
 	{
 		if (Application.isPlaying & !Application.isEditor)

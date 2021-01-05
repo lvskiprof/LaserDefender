@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3366880623150241883}
   - component: {fileID: 3366880623150241882}
-  - component: {fileID: 3366880623150241885}
-  - component: {fileID: -5946028814265028639}
+  - component: {fileID: 5054801058991732610}
+  - component: {fileID: 6466751714404861978}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3366880623150241885
+--- !u!114 &5054801058991732610
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,16 +101,16 @@ MonoBehaviour:
   YPadding: 0.45
   laserPrefab: {fileID: 5028310503923610492, guid: 86b7856f543f0404d927358b12cead9d,
     type: 3}
-  projectileSpeed: 20
+  projectileSpeed: 10
   projectileFiringPeriod: 0.25
   explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
     type: 3}
   durationOfExplosion: 1
   deathSFX: {fileID: 8300000, guid: f717e2d1dfa1bd641822b35693ea64cf, type: 3}
-  deathSoundVolume: 1
-  laserFireSFX: {fileID: 8300000, guid: 875b2e044e1b629478c0616131ac66a1, type: 3}
+  deathSoundVolume: 0.75
+  laserFireSFX: {fileID: 8300000, guid: f8e9952e884c45a48a1acdaf8970311f, type: 3}
   laserSoundVolume: 0.75
---- !u!58 &-5946028814265028639
+--- !u!58 &6466751714404861978
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,6 +123,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0011845827, y: 0.0035537183}
   serializedVersion: 2
-  m_Radius: 0.47
+  m_Radius: 0.49500003
