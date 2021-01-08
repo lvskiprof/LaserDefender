@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7983673127501530625}
   m_Layer: 0
-  m_Name: Path (0) 1
+  m_Name: Stationary
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -152,22 +152,21 @@ public class Enemy : MonoBehaviour
 		Debug.Log(GetShipID() + " info has been set.");
 	}   // SetShipInfo()
 
-
 	/***
 	*		GetShipID() returns information we can use to identify this ship for
 	*	Debug.Log() when needed.
 	***/
 	public string GetShipID()
 	{
-		return "Ship " + shipNumber + " from wave " + waveNumber;
+		return "Ship " + gameObject.name + " #" + shipNumber + " from wave #" + waveNumber;
 	}   // GetShipID()
 
 	/***
-	*		GetShipID() returns information we can use to identify this ship for
-	*	Debug.Log() when needed.
+	*		GetEnemyValue() returns information we can use to assign a value for
+	*	this ship when we start keeping score.
 	***/
 	public long GetEnemyValue()
 	{
 		return enemyValue;
-	}   // GetEnemyValue
+	}   // GetEnemyValue()
 }   // class Enemy

@@ -60,9 +60,9 @@ public class WaveConfig : ScriptableObject
 	{
 		var waveWaypoints = new List<Transform>();
 
-		foreach (Transform child in pathPrefab.transform)
+		foreach (Transform waypoint in pathPrefab.transform)
 		{
-			waveWaypoints.Add(child);
+			waveWaypoints.Add(waypoint);
 		}	// foreach
 
 		return waveWaypoints; 
@@ -75,11 +75,7 @@ public class WaveConfig : ScriptableObject
 	{
 		enemyShips[ship].transform.position = pathPrefab.transform.position;
 		Debug.Log(enemyShips[ship].GetComponent<Enemy>().GetShipID() + " is being enabled.");
-		enemyShips[ship].SetActive(true);	// Make it active now that we are using it
+		//enemyShips[ship].SetActive(true);	// Make it active now that we are using it
 		return enemyShips[ship];
 	}   // GameObject GetEnemyShip()
-
-	/***
-	*		
-	***/
 }   // class WaveConfig

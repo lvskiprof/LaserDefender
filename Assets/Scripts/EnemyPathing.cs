@@ -62,7 +62,7 @@ public class EnemyPathing : MonoBehaviour
 		{   // We only make a ship disappear if it is at the last of multiple waypoints
 			Debug.Log(gameObject.GetComponent<Enemy>().GetShipID() +
 				" is being set to inactive.");
-			gameObject.SetActive(false);    // Make is disappear so we can reuse it later
+			Destroy(gameObject);
 		}	// else-if
 	}   // Move()
 

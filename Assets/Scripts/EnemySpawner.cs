@@ -28,7 +28,7 @@ public class EnemySpawner : MonoBehaviour
         {
             yield return StartCoroutine(SpawnAllWaves());
         } while (looping);
-    }
+    }   // Start()
 
     /***
 	*		This coroutine spawns all waves, starting with the startingWave
