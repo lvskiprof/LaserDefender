@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -7965852288689045454}
   - component: {fileID: 3326600904373588712}
   - component: {fileID: 7687907399481743903}
+  - component: {fileID: 932575027910938588}
   m_Layer: 11
   m_Name: EnemyBomb
   m_TagString: Untagged
@@ -134,3 +135,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
+--- !u!114 &932575027910938588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7723163494949799297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2207f262c82a149bdf5d2b4d93a3b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 100
+  bombValue: 10
+  explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
+    type: 3}
+  durationOfExplosion: 1
+  deathSFX: {fileID: 8300000, guid: f717e2d1dfa1bd641822b35693ea64cf, type: 3}
+  deathSoundVolume: 0.75

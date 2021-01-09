@@ -8,7 +8,7 @@ public class DamageDealer : MonoBehaviour
     int             damage = 100;
 
     public int GetDamage() { return damage; }
-	public void Hit(GameObject ship) 
+	public void Hit(GameObject other) 
     {
     }   // Hit()
 }   // class DamageDealer

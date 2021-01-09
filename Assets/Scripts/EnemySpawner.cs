@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
 
     GameStatus  gameStatus; // GameStatus object for this level the player is on
     Level       level;      // Level the player is on
+
     // Start is called before the first frame update
     IEnumerator Start()
     {

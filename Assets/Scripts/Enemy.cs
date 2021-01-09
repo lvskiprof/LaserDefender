@@ -55,7 +55,8 @@ public class Enemy : MonoBehaviour
     }   // Update()
 
 	/***
-	*		OnApplicationQuit() will destroy all the cloned Enemy objects we created.
+	*		OnApplicationQuit() will destroy all the cloned Enemy objects we
+	*	created.
 	***/
 	void OnApplicationQuit()
 	{
@@ -64,8 +65,8 @@ public class Enemy : MonoBehaviour
 	}   // OnApplicationQuit
 
 	/***
-	*		CountDownAndShoot() will drop a bomb as soon as it show up and then drop the
-	*	next one after an randomized period.
+	*		CountDownAndShoot() will drop a bomb as soon as it show up and then
+	*	drop the next one after an randomized period.
 	***/
 	private void CountDownAndShoot()
 	{
