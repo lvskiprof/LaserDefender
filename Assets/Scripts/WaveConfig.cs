@@ -41,7 +41,8 @@ public class WaveConfig : ScriptableObject
 	}   // OnEnable()
 
 	/***
-	*		OnApplicationQuit() will destroy all the cloned Enemy objects we created.
+	*		OnApplicationQuit() will destroy all the cloned Enemy objects we
+	*	created.
 	***/
 	void OnApplicationQuit()
 	{

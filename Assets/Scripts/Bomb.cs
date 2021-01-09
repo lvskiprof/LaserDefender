@@ -14,7 +14,7 @@ public class Bomb : MonoBehaviour
     [SerializeField]
     GameObject  explosionVFX;
     [SerializeField]
-    float       durationOfExplosion = 1f;
+    float       durationOfExplosion = 1.0f;
 
     [Header("SFX")]
     [SerializeField]
