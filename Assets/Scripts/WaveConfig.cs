@@ -23,7 +23,7 @@ public class WaveConfig : ScriptableObject
 	List<GameObject>    enemyShips;
 
 	// OnEnable() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
-	void OnEnable()
+	void Start()
 	{
 		Debug.Log("Creating " + numberOfEnemies + " ships for " + this.name);
 		enemyShips = new List<GameObject>();
