@@ -159,6 +159,8 @@ public class Player : MonoBehaviour
 	***/
     void Die(DamageDealer damageDealer)
     {
+        SceneLoader scene = FindObjectOfType<SceneLoader>();
+
         Debug.Log("Ship " + gameObject.name + " has been destroyed");
         GameObject explosion = Instantiate(
                     explosionVFX,
@@ -166,7 +168,7 @@ public class Player : MonoBehaviour
                     transform.rotation);
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
-        gameObject.SetActive(false);
         damageDealer.Hit(gameObject);   // This is a NOP at this point
+        scene.LoadNextScene();
     }	// Die()
 }   // class Player
