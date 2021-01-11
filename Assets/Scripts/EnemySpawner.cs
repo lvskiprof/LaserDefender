@@ -49,6 +49,7 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator SpawnAllEnemiesInWave(WaveConfig waveConfig)
     {
         Debug.Log("Starting wave " + waveConfig.name);
+        waveConfig.BuildShips();
         for (int enemyCount = 0; enemyCount < waveConfig.GetNumberOfEnemies(); enemyCount++)
         {
             Debug.Log("Spawning enemy #" + enemyCount + " for wave " + waveConfig.name);

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName ="EnemyWaveConfig")]
-public class WaveConfig : ScriptableObject
+//public class WaveConfig : ScriptableObject
+public class WaveConfig : MonoBehaviour
 {
 	[SerializeField]
 	GameObject			enemyPrefab;
@@ -22,8 +23,8 @@ public class WaveConfig : ScriptableObject
 
 	List<GameObject>    enemyShips;
 
-	// Start() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
-	void Start()
+	// BuildShips() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
+	public void BuildShips()
 	{
 		Debug.Log("Creating " + numberOfEnemies + " ships for " + this.name);
 		enemyShips = new List<GameObject>();
@@ -38,7 +39,7 @@ public class WaveConfig : ScriptableObject
 			enemyShip.GetComponent<Enemy>().SetShipInfo(ship, waveNumber);
 			enemyShips.Add(enemyShip);
 		}   // for
-	}   // Start()
+	}   // BuildShips()
 
 	/***
 	*		OnApplicationQuit() will destroy all the cloned Enemy objects we
