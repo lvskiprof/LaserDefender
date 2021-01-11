@@ -18,11 +18,11 @@ public class WaveConfig : ScriptableObject
 	[SerializeField]
 	float				moveSpeed = 2f;
 	[SerializeField]
-	int					waveNumber;
+	int					waveNumber = 0;				// Set in the Unity Editor for each Wave object
 
 	List<GameObject>    enemyShips;
 
-	// OnEnable() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
+	// Start() is used to create all the instances of the enemy ships in a WaveConfig before they are used.
 	void Start()
 	{
 		Debug.Log("Creating " + numberOfEnemies + " ships for " + this.name);
@@ -38,7 +38,7 @@ public class WaveConfig : ScriptableObject
 			enemyShip.GetComponent<Enemy>().SetShipInfo(ship, waveNumber);
 			enemyShips.Add(enemyShip);
 		}   // for
-	}   // OnEnable()
+	}   // Start()
 
 	/***
 	*		OnApplicationQuit() will destroy all the cloned Enemy objects we
@@ -74,6 +74,7 @@ public class WaveConfig : ScriptableObject
 	public float GetMoveSpeed() { return moveSpeed; }
 	public GameObject GetEnemyShip(int ship) 
 	{
+		Debug.Log("EnemySpawner line # 77 ship = " + ship + ", enemyShips.Count = " + enemyShips.Count);
 		enemyShips[ship].transform.position = pathPrefab.transform.position;
 		Debug.Log(enemyShips[ship].GetComponent<Enemy>().GetShipID() + " is being enabled.");
 		//enemyShips[ship].SetActive(true);	// Make it active now that we are using it
