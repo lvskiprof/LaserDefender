@@ -132,14 +132,15 @@ public class Enemy : MonoBehaviour
 	private void Die(DamageDealer damageDealer)
 	{
 		Debug.Log(GetShipID() + " has been destroyed");
-		gameObject.SetActive(false);
+		//gameObject.SetActive(false);
 		GameObject explosion = Instantiate(
 					explosionVFX,
 					transform.position,
 					transform.rotation);
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
-		damageDealer.Hit(gameObject);	// This is a NOP at this point
+		damageDealer.Hit(gameObject);   // This is a NOP at this point
+		Destroy(gameObject);
 	}   // Die()
 
 	/***

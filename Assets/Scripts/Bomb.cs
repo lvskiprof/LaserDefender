@@ -41,11 +41,12 @@ public class Bomb : MonoBehaviour
 		DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
 		if (damageDealer)
 		{   // Only do this if not NULL (should not happen, but check to be safe)
+			Debug.Log(gameObject.name + " has hit " + other.name + " and is being destroyed");
 			ProcessHit(other, damageDealer);
 		}   // if
 		else
-		{   // It was NULL, so report it as an error for debuggin purposes
-			Debug.Log(gameObject.name + "in Bomb.cs OnTriggerEnter2D(): DamageDealer was null.");
+		{   // It was NULL, so report it as an error for debugging purposes
+			Debug.Log(gameObject.name + "in Bomb.cs OnTriggerEnter2D(): DamageDealer was null and is being destroyed");
 			Destroy(gameObject);
 		}   // else
 	}   // OnTriggerEnter2D(Collider2D other)
