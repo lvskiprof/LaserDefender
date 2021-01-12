@@ -73,7 +73,9 @@ public class Enemy : MonoBehaviour
 		shotCounter -= Time.deltaTime;
 		if (shotCounter <= 0f)
 		{
-			Fire();
+			if (projectile != null)
+				Fire();
+
 			shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
 		}   // if
 	}   // CountDownAndShoot()
@@ -115,14 +117,13 @@ public class Enemy : MonoBehaviour
 	private void ProcessHit(Collider2D other, DamageDealer damageDealer)
 	{
 		health -= damageDealer.GetDamage();
-		Debug.Log(GetShipID() + " health is now " + health);
+		Debug.Log(GetShipID() + " health is now " + health + " after being hit by " + other.name + ".");
 		if (health <= 0f)
 		{
 			Die(damageDealer);
+			Debug.Log(damageDealer.gameObject.name + " is being destroyed after being hit by " + other.name + ".");
+			Destroy(damageDealer.gameObject);
 		}   // if
-
-		Debug.Log(damageDealer.gameObject.name + " is being destroyed.");
-		Destroy(damageDealer.gameObject);
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
 	/***

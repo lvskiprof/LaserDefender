@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -6,9 +7,12 @@ using UnityEngine.UIElements;
 
 public class SceneLoader : MonoBehaviour
 {
-/***
-*		LoadNextScene() will load whatever the next numbered scene in Build Settings.
-***/
+	[SerializeField]
+	float delayInSeconds = 2f;
+	
+	/***
+	*		LoadNextScene() will load whatever the next numbered scene in Build Settings.
+	***/
 	public void LoadNextScene()
 	{
 		int     currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
@@ -43,8 +47,17 @@ public class SceneLoader : MonoBehaviour
 	{
 		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
 		//gameStatus.ResetScore();
+		StartCoroutine(WaitToLoad());
 		SceneManager.LoadScene("GameOver");
 	}   // LoadGameScene()
+
+	/***
+	*		WaitToLoad() will delay for the seconds in delayInSeconds.
+	***/
+	IEnumerator WaitToLoad()
+	{
+		yield return new WaitForSeconds(delayInSeconds);
+	}   // WaitToLoad()
 
 	/***
 	*       ExitGame() is called to exit the game.  It handles the two cases of

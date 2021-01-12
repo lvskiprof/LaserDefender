@@ -91,8 +91,8 @@ public class Player : MonoBehaviour
     private void SetUpMoveBoundaries()
     {
         Camera gameCamera = Camera.main;
-        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + xPadding - 0.1f;   // Need a small fudge factor here
-        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - xPadding;
+        xMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).x + xPadding;
+        xMax = gameCamera.ViewportToWorldPoint(new Vector3(1, 0, 0)).x - xPadding + 0.22f;   // Need a small fudge factor here
         yMin = gameCamera.ViewportToWorldPoint(new Vector3(0, 0, 0)).y + YPadding;
         yMax = gameCamera.ViewportToWorldPoint(new Vector3(0, 1, 0)).y - YPadding;
     }   // SetUpMoveBoundaries()
@@ -145,11 +145,13 @@ public class Player : MonoBehaviour
     private void ProcessHit(Collider2D other, DamageDealer damageDealer)
     {
         health -= damageDealer.GetDamage();
-        Debug.Log("Player health is now " + health);
+        Debug.Log("Player health is now " + health + " after being hit by " + other.name + ".");
         damageDealer.gameObject.SetActive(false);
         if (health <= 0f)
         {
             Die(damageDealer);
+            Debug.Log(damageDealer.gameObject.name + " is being destroyed after being hit by " + other.name + ".");
+            Destroy(damageDealer.gameObject);
         }   // if
     }   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
@@ -169,6 +171,6 @@ public class Player : MonoBehaviour
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
         damageDealer.Hit(gameObject);   // This is a NOP at this point
-        scene.LoadNextScene();
+        scene.LoadGameOver();
     }	// Die()
 }   // class Player

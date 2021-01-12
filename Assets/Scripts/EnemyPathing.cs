@@ -60,8 +60,7 @@ public class EnemyPathing : MonoBehaviour
 		}   // if
 		else if (waypoints.Count != 1)
 		{   // We only make a ship disappear if it is at the last of multiple waypoints
-			Debug.Log(gameObject.GetComponent<Enemy>().GetShipID() +
-				" is being set to inactive.");
+			Debug.Log(gameObject.GetComponent<Enemy>().GetShipID() + " is being destroyed after completing the path.");
 			Destroy(gameObject);
 		}	// else-if
 	}   // Move()
