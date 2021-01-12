@@ -23,11 +23,25 @@ public class Bomb : MonoBehaviour
     [Range(0,1)]
     float       deathSoundVolume = 0.75f;
 
-    /***
+	/***
+	*		Cached component references.
+	***/
+
+	GameStatus  gameStatus;
+
+	/***
+    *       Start is used to cache the GameStatus object.
+    ***/
+	void Start()
+	{
+		gameStatus = FindObjectOfType<GameStatus>();
+	}   // Start()
+
+	/***
 	*		OnApplicationQuit() will destroy all the cloned Bomb
 	*	objects we created.
 	***/
-    void OnApplicationQuit()
+	void OnApplicationQuit()
     {
         Debug.Log(gameObject.name + " is being destroyed in Bomb.cs OnApplicationQuit().");
         Destroy(gameObject);
@@ -83,5 +97,6 @@ public class Bomb : MonoBehaviour
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
+		gameStatus.AddToScore(bombValue);	// Maybe this should be done in DamageDealer.Hit()
 	}   // Die()
 }   // class Bomb

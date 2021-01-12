@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float       health = 100f;
 	[SerializeField]
-	long        enemyValue = 10;
+	long        enemyValue = 50;
 
 	[Header("Bomb")]
 	[SerializeField]
@@ -42,9 +42,16 @@ public class Enemy : MonoBehaviour
 	int         shipNumber;
 	int         waveNumber;
 
+	/***
+	*		Cached component references.
+	***/
+
+	GameStatus  gameStatus;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		gameStatus = FindObjectOfType<GameStatus>();
 		shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
     }	// Start()
 
@@ -141,6 +148,7 @@ public class Enemy : MonoBehaviour
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
+		gameStatus.AddToScore(enemyValue);   // Maybe this should be done in DamageDealer.Hit()
 		Destroy(gameObject);
 	}   // Die()
 

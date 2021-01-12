@@ -12,8 +12,6 @@ public class GameStatus : MonoBehaviour
 	[SerializeField]
 	float   gameSpeed = 1f;
 	[SerializeField]
-	int     pointsPerEnemyDestroyed = 10;   // This is set in the Unity Editor, so this value is overridden
-	[SerializeField]
 	TextMeshProUGUI score;
 	[SerializeField]
 	bool    isAutoPlayEnabled = false;
@@ -111,9 +109,9 @@ public class GameStatus : MonoBehaviour
 	*	value.  If we want, this could be changed to be a enemyValue, but tying
 	*	it to the color will make visual sense to the player.
 	***/
-	public void AddToScore(Enemy enemy)
+	public void AddToScore(long value)
 	{
-		currentScore += pointsPerEnemyDestroyed * enemy.GetEnemyValue();
+		currentScore += value;
 		DisplayScore();
 	}   // AddToScore()
 

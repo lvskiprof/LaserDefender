@@ -75,7 +75,7 @@ public class WaveConfig : ScriptableObject
 	public float GetMoveSpeed() { return moveSpeed; }
 	public GameObject GetEnemyShip(int ship) 
 	{
-		Debug.Log("EnemySpawner line # 77 ship = " + ship + ", enemyShips.Count = " + enemyShips.Count);
+		Debug.Log("EnemySpawner line # 78 ship = " + ship + ", enemyShips.Count = " + enemyShips.Count + " for Wave " + waveNumber + ".");
 		enemyShips[ship].transform.position = pathPrefab.transform.position;
 		//Debug.Log(enemyShips[ship].GetComponent<Enemy>().GetShipID() + " is being enabled.");
 		//enemyShips[ship].SetActive(true);	// Make it active now that we are using it
