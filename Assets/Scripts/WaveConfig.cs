@@ -37,6 +37,7 @@ public class WaveConfig : ScriptableObject
 					Quaternion.identity);
 
 			enemyShip.GetComponent<Enemy>().SetShipInfo(ship, waveNumber);
+			enemyShip.name = enemyPrefab.name + " #" + ship.ToString() + " in " + this.name;
 			enemyShips.Add(enemyShip);
 		}   // for
 	}   // BuildShips()

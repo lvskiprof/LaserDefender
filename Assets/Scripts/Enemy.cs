@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 	[SerializeField]
 	float       minTimeBetweenShots = 0.2f;
 	[SerializeField]
-	float       maxTimeBetweenShots = 3f;
+	float       maxTimeBetweenShots = 1f;
 	[SerializeField]
 	GameObject  projectile;
 	[SerializeField]
@@ -90,6 +90,7 @@ public class Enemy : MonoBehaviour
 			transform.position,
 			Quaternion.identity) as GameObject; ;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
+		bomb.name = "Bomb from ship " + GetShipID();
 		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);
 		Debug.Log(GetShipID() + " signals bombs away, boss");
 	}   // Fire()
@@ -161,7 +162,7 @@ public class Enemy : MonoBehaviour
 	***/
 	public string GetShipID()
 	{
-		return "Ship " + gameObject.name + " #" + shipNumber + " from wave #" + waveNumber;
+		return "Ship " + gameObject.name;
 	}   // GetShipID()
 
 	/***

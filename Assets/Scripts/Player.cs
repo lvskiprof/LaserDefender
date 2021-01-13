@@ -129,7 +129,7 @@ public class Player : MonoBehaviour
     {
         DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
         if (damageDealer)
-        {   // Only do this if not NULL (should not happen, but check to be safe)
+        {   // Only do this if not NULL (should always happen, but check to be safe)
             ProcessHit(other, damageDealer);
         }   // if
         else
@@ -146,9 +146,9 @@ public class Player : MonoBehaviour
     {
         health -= damageDealer.GetDamage();
         Debug.Log("Player health is now " + health + " after being hit by " + other.name + ".");
-        damageDealer.gameObject.SetActive(false);
         if (health <= 0f)
         {
+            damageDealer.gameObject.SetActive(false);
             Die(damageDealer);
             Debug.Log(damageDealer.gameObject.name + " is being destroyed after being hit by " + other.name + ".");
             Destroy(damageDealer.gameObject);
@@ -171,6 +171,7 @@ public class Player : MonoBehaviour
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
         damageDealer.Hit(gameObject);   // This is a NOP at this point
+        Destroy(damageDealer.gameObject);
         scene.LoadGameOver();
     }	// Die()
 }   // class Player

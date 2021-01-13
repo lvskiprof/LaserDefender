@@ -48,7 +48,6 @@ public class SceneLoader : MonoBehaviour
 		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
 		//gameStatus.ResetScore();
 		StartCoroutine(WaitToLoad());
-		SceneManager.LoadScene("GameOver");
 	}   // LoadGameScene()
 
 	/***
@@ -57,6 +56,7 @@ public class SceneLoader : MonoBehaviour
 	IEnumerator WaitToLoad()
 	{
 		yield return new WaitForSeconds(delayInSeconds);
+		SceneManager.LoadScene("GameOver");
 	}   // WaitToLoad()
 
 	/***
