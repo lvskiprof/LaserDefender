@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField]
     float       health = 100f;
 	[SerializeField]
-	long        enemyValue = 50;
+	long        enemyValue = 10;
 
 	[Header("Bomb")]
 	[SerializeField]
@@ -42,16 +42,9 @@ public class Enemy : MonoBehaviour
 	int         shipNumber;
 	int         waveNumber;
 
-	/***
-	*		Cached component references.
-	***/
-
-	GameStatus  gameStatus;
-
 	// Start is called before the first frame update
 	void Start()
     {
-		gameStatus = FindObjectOfType<GameStatus>();
 		shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
     }	// Start()
 
@@ -97,7 +90,7 @@ public class Enemy : MonoBehaviour
 			transform.position,
 			Quaternion.identity) as GameObject; ;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
-		bomb.name = "Bomb from ship " + GetShipID();
+		bomb.name = "Bomb from " + GetShipID();
 		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);
 		Debug.Log(GetShipID() + " signals bombs away, boss");
 	}   // Fire()
@@ -149,7 +142,6 @@ public class Enemy : MonoBehaviour
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
-		gameStatus.AddToScore(enemyValue);   // Maybe this should be done in DamageDealer.Hit()
 		Destroy(gameObject);
 	}   // Die()
 
