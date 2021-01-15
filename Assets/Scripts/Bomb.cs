@@ -60,7 +60,7 @@ public class Bomb : MonoBehaviour
 		}   // if
 		else
 		{   // It was NULL, so report it as an error for debugging purposes
-			Debug.Log(gameObject.name + "in Bomb.cs OnTriggerEnter2D(): DamageDealer was null and is being destroyed");
+			Debug.Log(gameObject.name + " in Bomb.cs OnTriggerEnter2D() was hit by " + other.name + " and DamageDealer was null and is being destroyed.");
 			Destroy(gameObject);
 		}   // else
 	}   // OnTriggerEnter2D(Collider2D other)

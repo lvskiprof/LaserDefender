@@ -149,9 +149,8 @@ public class Player : MonoBehaviour
         if (health <= 0f)
         {
             damageDealer.gameObject.SetActive(false);
-            Die(damageDealer);
             Debug.Log(damageDealer.gameObject.name + " is being destroyed after being hit by " + other.name + ".");
-            Destroy(damageDealer.gameObject);
+            Die(damageDealer);
         }   // if
     }   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
@@ -164,14 +163,15 @@ public class Player : MonoBehaviour
         SceneLoader scene = FindObjectOfType<SceneLoader>();
 
         Debug.Log("Ship " + gameObject.name + " has been destroyed");
+        damageDealer.Hit(gameObject);   // This is a NOP at this point
+        Destroy(damageDealer.gameObject);   // Destroy what hit the Player ship
         GameObject explosion = Instantiate(
                     explosionVFX,
                     transform.position,
                     transform.rotation);
+        gameObject.SetActive(false);    // Make the Player ship disappear
         Destroy(explosion, durationOfExplosion);
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
-        damageDealer.Hit(gameObject);   // This is a NOP at this point
-        Destroy(damageDealer.gameObject);
         scene.LoadGameOver();
     }	// Die()
 }   // class Player

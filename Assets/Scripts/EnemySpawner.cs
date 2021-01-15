@@ -63,7 +63,7 @@ public class EnemySpawner : MonoBehaviour
             var newEnemy = waveConfig.GetEnemyShip(enemyCount);
             newEnemy.transform.position = waveConfig.GetWaypoints()[0].transform.position;
             newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);
-            level.CountEnemies();
+            level.AddEnemy();
             yield return new WaitForSeconds(waveConfig.GetTimeBetweenSpawns());
         }   // for
     }   // IEnumerator SpawnAllEnemiesInWave()

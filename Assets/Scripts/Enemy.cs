@@ -42,9 +42,18 @@ public class Enemy : MonoBehaviour
 	int         shipNumber;
 	int         waveNumber;
 
+	/***
+	*		Cached componenet references.
+	***/
+
+	GameStatus  gameStatus; // GameStatus object for this level the player is on
+	Level       level;
+
 	// Start is called before the first frame update
 	void Start()
     {
+		gameStatus = FindObjectOfType<GameStatus>();
+		level = FindObjectOfType<Level>();
 		shotCounter = Random.Range(minTimeBetweenShots, maxTimeBetweenShots);
     }	// Start()
 
@@ -92,7 +101,7 @@ public class Enemy : MonoBehaviour
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
 		bomb.name = "Bomb from " + GetShipID();
 		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);
-		Debug.Log(GetShipID() + " signals bombs away, boss");
+		Debug.Log(bomb.name + " is away, boss");
 	}   // Fire()
 
 	/***
@@ -100,15 +109,24 @@ public class Enemy : MonoBehaviour
 	***/
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
-		if (damageDealer)
-		{   // Only do this if not NULL (should not happen, but check to be safe)
-			ProcessHit(other, damageDealer);
-		}   // if
+		if (!other.CompareTag("Bomb") && !other.CompareTag("Enemy"))
+		{	// Only let hits happen if they are from something other than a bomb or another enemy ship
+			DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
+			if (damageDealer)
+			{   // Only do this if not NULL (should not happen, but check to be safe)
+				ProcessHit(other, damageDealer);
+			}   // if
+			else
+			{   // It was NULL, so report it as an error for debuggin purposes
+				Debug.Log(GetShipID() + " in Enemy.cs OnTriggerEnter2D() was hit by " + other.name + " and DamageDealer was null and is being destroyed.");
+				level.EnemyDestroyed();
+				Destroy(gameObject);
+			}   // else
+		}	// if
 		else
-		{   // It was NULL, so report it as an error for debuggin purposes
-			Debug.Log(GetShipID() + "in Enemy.cs OnTriggerEnter2D(): DamageDealer was null.");
-		}   // else
+		{	// Report any hit that we are ignoring, in case we ignored something we shouldn't
+			Debug.Log("Ignoring " + GetShipID() + " being hit by " + other.name + ".");
+		}	// else
 	}   // OnTriggerEnter2D(Collider2D other)
 
 	/***
@@ -120,19 +138,20 @@ public class Enemy : MonoBehaviour
 		health -= damageDealer.GetDamage();
 		Debug.Log(GetShipID() + " health is now " + health + " after being hit by " + other.name + ".");
 		if (health <= 0f)
-		{
-			Die(damageDealer);
-			Debug.Log(damageDealer.gameObject.name + " is being destroyed after being hit by " + other.name + ".");
+		{	// Destroy what hit the ship first and then destroy the ship
+			Debug.Log(gameObject.name + " is being destroyed after being hit by " + other.name + ".");
 			Destroy(damageDealer.gameObject);
+			Die(damageDealer);
 		}   // if
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
 	/***
 	*		Die() handles doing the explosion and making the ship inactive so it
-	*	disappears.
+	*	disappears.  It also updates the current score based on the ship value.
 	***/
 	private void Die(DamageDealer damageDealer)
 	{
+		gameStatus.AddToScore(enemyValue);
 		Debug.Log(GetShipID() + " has been destroyed");
 		//gameObject.SetActive(false);
 		GameObject explosion = Instantiate(
@@ -142,6 +161,7 @@ public class Enemy : MonoBehaviour
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
+		level.EnemyDestroyed();
 		Destroy(gameObject);
 	}   // Die()
 

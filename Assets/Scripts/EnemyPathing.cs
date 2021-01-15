@@ -11,9 +11,16 @@ public class EnemyPathing : MonoBehaviour
 	List<Transform>     waypoints;
     int                 waypointIndex = 0;
 
-    // Start is called before the first frame update
-    void Start()
+	/***
+	*		Cached componenet references.
+	***/
+
+	Level       level;
+
+	// Start is called before the first frame update
+	void Start()
     {
+		level = FindObjectOfType<Level>();
 		if (waveConfig == null)
 		{
 			Debug.Log("waveConfig for " + gameObject.GetComponent<Enemy>().GetShipID() + " is null in " + gameObject.name);
@@ -60,7 +67,10 @@ public class EnemyPathing : MonoBehaviour
 		}   // if
 		else if (waypoints.Count != 1)
 		{   // We only make a ship disappear if it is at the last of multiple waypoints
-			Debug.Log(gameObject.GetComponent<Enemy>().GetShipID() + " is being destroyed after completing the path.");
+			Enemy ship = gameObject.GetComponent<Enemy>();
+
+			Debug.Log(ship.name + " is being destroyed after completing the path.");
+			level.EnemyDestroyed();
 			Destroy(gameObject);
 		}	// else-if
 	}   // Move()
