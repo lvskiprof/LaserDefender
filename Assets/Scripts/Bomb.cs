@@ -78,8 +78,8 @@ public class Bomb : MonoBehaviour
 			Die(damageDealer);
 		}   // if
 
-		Debug.Log(damageDealer.gameObject.name + " is being destroyed.");
-		Destroy(damageDealer.gameObject);
+		Debug.Log(gameObject.name + " is being destroyed.");
+		Destroy(gameObject);
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
 	/***
@@ -97,6 +97,9 @@ public class Bomb : MonoBehaviour
 		Destroy(explosion, durationOfExplosion);
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
-		gameStatus.AddToScore(bombValue);	// Maybe this should be done in DamageDealer.Hit()
+		if (damageDealer.gameObject.tag.Equals("Laser"))
+		{   // Only add to the score if the bomb hit by the player's laser
+			gameStatus.AddToScore(bombValue);
+		}	// if
 	}   // Die()
 }   // class Bomb

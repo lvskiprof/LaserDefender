@@ -201,7 +201,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameSpeed: 1
-  pointsPerEnemyDestroyed: 10
   score: {fileID: 966241467}
   isAutoPlayEnabled: 0
   currentScore: 0
@@ -607,7 +606,7 @@ PrefabInstance:
     - target: {fileID: 5054801058991732610, guid: 763169757f90f90408401c2755bb9315,
         type: 3}
       propertyPath: health
-      value: 200
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 763169757f90f90408401c2755bb9315, type: 3}
