@@ -11,7 +11,8 @@ public class SceneLoader : MonoBehaviour
 	float delayInSeconds = 2f;
 	
 	/***
-	*		LoadNextScene() will load whatever the next numbered scene in Build Settings.
+	*		LoadNextScene() will load whatever the next numbered scene in Build
+	*	Settings.
 	***/
 	public void LoadNextScene()
 	{
@@ -25,8 +26,8 @@ public class SceneLoader : MonoBehaviour
 	***/
 	public void LoadStartScene()
 	{
-		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
-		//gameStatus.ResetScore();
+		GameStatus gameStatus = FindObjectOfType<GameStatus>();
+		gameStatus.ResetScore();
 		SceneManager.LoadScene(0);
 	}   // LoadStartScene()
 
@@ -35,8 +36,8 @@ public class SceneLoader : MonoBehaviour
 	***/
 	public void LoadGameScene()
 	{
-		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
-		//gameStatus.ResetScore();
+		GameStatus gameStatus = FindObjectOfType<GameStatus>();
+		gameStatus.ResetScore();
 		SceneManager.LoadScene("Game");
 	}   // LoadGameScene()
 
@@ -45,10 +46,8 @@ public class SceneLoader : MonoBehaviour
 	***/
 	public void LoadGameOver()
 	{
-		//GameStatus gameStatus = FindObjectOfType<GameStatus>();
-		//gameStatus.ResetScore();
 		StartCoroutine(WaitToLoad());
-	}   // LoadGameScene()
+	}   // LoadGameOver()
 
 	/***
 	*		WaitToLoad() will delay for the seconds in delayInSeconds.

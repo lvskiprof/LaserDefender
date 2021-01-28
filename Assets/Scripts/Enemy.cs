@@ -97,7 +97,7 @@ public class Enemy : MonoBehaviour
 		GameObject bomb = Instantiate(
 			projectile,
 			transform.position,
-			Quaternion.identity) as GameObject; ;
+			Quaternion.identity) as GameObject;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
 		bomb.name = "Bomb from " + GetShipID();
 		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);

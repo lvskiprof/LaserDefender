@@ -37,8 +37,8 @@ public class Level : MonoBehaviour
     }   // AddEnemy()
 
     /***
-    *       EnemyDestroyed() will decrement how many enemies are on this level and will
-    *   load the Game Over level when it reaches 0.
+    *       EnemyDestroyed() will decrement how many enemies are on this level
+    *   and will load the Game Over level when it reaches 0.
     ***/
     public void EnemyDestroyed()
     {

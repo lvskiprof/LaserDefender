@@ -28,16 +28,16 @@ public class GameStatus : MonoBehaviour
 	*		Cached component references.
 	***/
 
-	Scene   currentScene;	// When this doesn't match the current scene, save it and check if we are in Game Over scene
+	Scene   currentScene;   // When this doesn't match the current scene, save it and check if we are in Game Over scene
 
 	/***
 	*		Awake() runs before anything else, including Start().
 	*		Note: DestroyImmediate() is used instead of Destroy(), because there
 	*	can be a delay with Destroy() that can cause problems if some code
-	*	accesses the wrong the newer instance before it is destroyed.  However, I
-	*	was told that DestroyImmediate() can have bad side effects, so I am not
-	*	using it.  Another option can be to set the gameObject to be inactive
-	*	before it is destroyed.  That code would look like this:
+	*	accesses the wrong the newer instance before it is destroyed.  However,
+	*	I was told that DestroyImmediate() can have bad side effects, so I am
+	*	not using it.  Another option can be to set the gameObject to be
+	*	inactive before it is destroyed.  That code would look like this:
 	*		gameObject.SetActive(false);
 	*		Destroy(gameObject);
 	*		
