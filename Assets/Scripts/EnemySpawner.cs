@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
         waveConfig.BuildShips();
         for (int enemyCount = 0; enemyCount < waveConfig.GetNumberOfEnemies(); enemyCount++)
         {
-            Debug.Log("Spawning enemy #" + enemyCount + " for wave " + waveConfig.name);
+            Debug.Log("Spawning enemy #" + enemyCount + " for " + waveConfig.name);
             var newEnemy = waveConfig.GetEnemyShip(enemyCount);
             newEnemy.transform.position = waveConfig.GetWaypoints()[0].transform.position;
             newEnemy.GetComponent<EnemyPathing>().SetWaveConfig(waveConfig);

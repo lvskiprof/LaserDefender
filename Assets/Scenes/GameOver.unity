@@ -1524,6 +1524,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Score Text (TMP)
       objectReference: {fileID: 0}
+    - target: {fileID: 7788357171349335388, guid: 345cb86008e645e479be97fca6249a0c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Score
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 345cb86008e645e479be97fca6249a0c, type: 3}
 --- !u!1001 &2332267638533911036

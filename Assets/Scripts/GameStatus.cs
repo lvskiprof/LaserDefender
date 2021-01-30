@@ -12,8 +12,6 @@ public class GameStatus : MonoBehaviour
 	[SerializeField]
 	float   gameSpeed = 1f;
 	[SerializeField]
-	TextMeshProUGUI score;
-	[SerializeField]
 	bool    isAutoPlayEnabled = false;
 
 	/***
@@ -28,7 +26,8 @@ public class GameStatus : MonoBehaviour
 	*		Cached component references.
 	***/
 
-	Scene   currentScene;   // When this doesn't match the current scene, save it and check if we are in Game Over scene
+	TextMeshProUGUI score = null;
+	Scene			currentScene;   // When this doesn't match the current scene, save it and check if we are in Game Over scene
 
 	/***
 	*		Awake() runs before anything else, including Start().
@@ -50,7 +49,6 @@ public class GameStatus : MonoBehaviour
 		{   // We only want to keep the first one to preserve game status between scenes
 			gameObject.SetActive(false);    // Prevent anything from being able to find or interact with this instance of GameStatus
 			Destroy(gameObject);    // Destroy this secondary version of GameStatus
-			score.text = "Score: " + currentScore.ToString();
 		}   // if
 		else
 		{   // Tell Unity not to destroy this gameObject when another scene loads in the future
@@ -63,7 +61,8 @@ public class GameStatus : MonoBehaviour
 	***/
 	public void DisplayScore()
 	{
-		score.text = "Score: " + currentScore.ToString();
+		if (score != null)	// Only set if we have a text field to display in
+			score.text = "Score: " + currentScore.ToString();
 	}   // DisplayScore()
 
 	/***
@@ -89,13 +88,18 @@ public class GameStatus : MonoBehaviour
 		if (thisScene != currentScene)
 		{   // This is the first time in this scene
 			currentScene = thisScene;   // Save it so we don't do this again for this scene
-			TextMeshPro[] resultText = FindObjectsOfType<TextMeshPro>();
+			TextMeshProUGUI[] resultText = FindObjectsOfType<TextMeshProUGUI>();
 			for (int i = 0; i < resultText.Length; i++)
 			{   // See if the text that defaults to "You Lost!" message is present
-				if (resultText[i].tag == "Finish" && allEnemiesDestroyed)
+				if (resultText[i].CompareTag("Finish") && allEnemiesDestroyed)
 				{   // Change the text to show that you won
 					resultText[i].text = "You Won!!!";
 				}   // if
+				else if (resultText[i].CompareTag("Score"))
+				{   // Update the score when we switch scenes
+					score = resultText[i];
+					DisplayScore();
+				}	// else-if
 			}   // for
 		}   // if
 	}   // Update()
