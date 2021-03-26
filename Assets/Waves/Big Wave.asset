@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 459911b59bb0a82418a3465819c95726, type: 3}
-  m_Name: Wave 2
+  m_Name: Big Wave
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 1757875612050524994, guid: 2225c8f471c703347a5cc66396f12d08,
+  enemyPrefab: {fileID: 636208267118988037, guid: d4d53046944b92942bad0381ec7aac4d,
     type: 3}
-  pathPrefab: {fileID: 5747210439052221265, guid: 5490efb18538a59449743a50cad60258,
+  pathPrefab: {fileID: 5747210439052221265, guid: f92b5cfc03ae01e4a8ae57cc7acf2cdf,
     type: 3}
-  timeBetweenSpawns: 0.5
-  spawnRandomFactor: 0.3
-  numberOfEnemies: 3
+  timeBetweenSpawns: 1
+  spawnRandomFactor: 0.5
+  numberOfEnemies: 6
   moveSpeed: 2
-  waveNumber: 2
+  waveNumber: 5

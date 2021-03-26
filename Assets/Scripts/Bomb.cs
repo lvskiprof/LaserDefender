@@ -27,14 +27,14 @@ public class Bomb : MonoBehaviour
 	*		Cached component references.
 	***/
 
-	GameStatus  gameStatus;
+	private GameStatus  _gameStatus;
 
 	/***
     *       Start is used to cache the GameStatus object.
     ***/
 	void Start()
 	{
-		gameStatus = FindObjectOfType<GameStatus>();
+		_gameStatus = FindObjectOfType<GameStatus>();
 	}   // Start()
 
 	/***
@@ -52,16 +52,22 @@ public class Bomb : MonoBehaviour
 	***/
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
-		if (damageDealer)
-		{   // Only do this if not NULL (should not happen, but check to be safe)
-			Debug.Log(gameObject.name + " has hit " + other.name + " and is being destroyed");
-			ProcessHit(other, damageDealer);
+		if (!other.CompareTag("Bomb") && !other.CompareTag("Enemy"))
+		{
+			var    damageDealer = other.gameObject.GetComponent<DamageDealer>();
+			if (!(damageDealer is null) && damageDealer)
+			{   // Only do this if not NULL (should not happen, but check to be safe)
+				ProcessHit(other, damageDealer);
+			}   // if
+			else
+			{   // It was NULL, so report it as an error for debugging purposes
+				Debug.Log(gameObject.name + " in Bomb.cs OnTriggerEnter2D() was hit by " + other.name + " and DamageDealer was null and is being destroyed.");
+				Destroy(gameObject);
+			}   // else
 		}   // if
 		else
-		{   // It was NULL, so report it as an error for debugging purposes
-			Debug.Log(gameObject.name + " in Bomb.cs OnTriggerEnter2D() was hit by " + other.name + " and DamageDealer was null and is being destroyed.");
-			Destroy(gameObject);
+		{   // Report any hit that we are ignoring, in case we ignored something we shouldn't
+			Debug.Log("Ignoring " + gameObject.name + " being hit by " + other.name + ".");
 		}   // else
 	}   // OnTriggerEnter2D(Collider2D other)
 
@@ -71,15 +77,20 @@ public class Bomb : MonoBehaviour
 	***/
 	private void ProcessHit(Collider2D other, DamageDealer damageDealer)
 	{
-		health -= damageDealer.GetDamage();
+		var damage = damageDealer.GetDamage();
+		Debug.Log(gameObject.name + " has hit " + other.name + " and is being damaged by " + damage + " hits.");
+		health -= damage;
 		Debug.Log(gameObject.name + " health is now " + health);
 		if (health <= 0f)
 		{
 			Die(damageDealer);
 		}   // if
 
-		Debug.Log(gameObject.name + " is being destroyed.");
-		Destroy(gameObject);
+		if (other.CompareTag("Laser"))
+		{   // Destroy any laser that hits the bomb
+			Debug.Log(other.gameObject.name + " is being destroyed.");
+			Destroy(other.gameObject);
+		}   // if
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
 	/***
@@ -90,16 +101,26 @@ public class Bomb : MonoBehaviour
 	{
 		Debug.Log(gameObject.name + " has been destroyed");
 		gameObject.SetActive(false);
-		GameObject explosion = Instantiate(
+		var transform1 = transform;
+		var explosion = Instantiate(
 					explosionVFX,
-					transform.position,
-					transform.rotation);
+					transform1.position,
+					transform1.rotation);
 		Destroy(explosion, durationOfExplosion);
+		System.Diagnostics.Debug.Assert(Camera.main != null, "Camera.main != null");
 		AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
 		damageDealer.Hit(gameObject);   // This is a NOP at this point
-		if (damageDealer.gameObject.tag.Equals("Laser"))
+		if (damageDealer.gameObject.CompareTag("Laser"))
 		{   // Only add to the score if the bomb hit by the player's laser
-			gameStatus.AddToScore(bombValue);
+			_gameStatus.AddToScore(bombValue);
 		}	// if
 	}   // Die()
+
+	/***
+	*		GetBombValue() returns the value when we are hit by a laser and destroyed.
+	***/
+	public long GetBombValue()
+	{
+		return bombValue;
+	}   // GetBombValue()
 }   // class Bomb

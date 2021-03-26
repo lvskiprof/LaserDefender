@@ -9,9 +9,10 @@ public class Enemy : MonoBehaviour
     float       health = 100f;
 	[SerializeField]
 	long        enemyValue = 10;
+	[SerializeField]
+	float       yPadding = 0.75f;
 
 	[Header("Bomb")]
-	[SerializeField]
 	float       shotCounter;
 	[SerializeField]
 	float       minTimeBetweenShots = 0.2f;
@@ -34,16 +35,15 @@ public class Enemy : MonoBehaviour
 	[SerializeField] [Range(0,1)]
 	float       deathSoundVolume = 0.75f;
 	[SerializeField]
-	AudioClip   bombDropSFX;
+	AudioClip   bombDropSfx;
 	[SerializeField]
 	[Range(0,1)]
 	float       bombSoundVolume = 0.75f;
 
 	int         shipNumber;
-	int         waveNumber;
 
 	/***
-	*		Cached componenet references.
+	*		Cached component references.
 	***/
 
 	GameStatus  gameStatus; // GameStatus object for this level the player is on
@@ -94,13 +94,14 @@ public class Enemy : MonoBehaviour
 	***/
 	private void Fire()
 	{
-		GameObject bomb = Instantiate(
-			projectile,
-			transform.position,
-			Quaternion.identity) as GameObject;
+		Vector2 bombStart = new Vector2(transform.position.x,
+				transform.position.y - yPadding);   // Start below ship
+		bombStart = transform.position;
+		Debug.Log("Ship @ (" + transform.position.x + "," + transform.position.y + ") dropping bomb @ (" + bombStart.x + "," + bombStart.y + ")");
+		GameObject bomb = Instantiate(projectile, bombStart, Quaternion.identity) as GameObject;
 		bomb.GetComponent<Rigidbody2D>().velocity = new Vector2(0, bombSpeed);
 		bomb.name = "Bomb from " + GetShipID();
-		AudioSource.PlayClipAtPoint(bombDropSFX, Camera.main.transform.position, bombSoundVolume);
+		AudioSource.PlayClipAtPoint(bombDropSfx, Camera.main.transform.position, bombSoundVolume);
 		Debug.Log(bomb.name + " is away, boss");
 	}   // Fire()
 
@@ -142,6 +143,12 @@ public class Enemy : MonoBehaviour
 			Debug.Log(gameObject.name + " is being destroyed after being hit by " + other.name + ".");
 			Destroy(damageDealer.gameObject);
 			Die(damageDealer);
+
+			if (other.CompareTag("Laser"))
+			{   // Destroy any laser that hits the ship
+				Debug.Log(other.gameObject.name + " is being destroyed.");
+				Destroy(other.gameObject);
+			}   // if
 		}   // if
 	}   // ProcessHit(Collider2D other, DamageDealer damageDealer)
 
@@ -169,10 +176,9 @@ public class Enemy : MonoBehaviour
 	*		SetShipInfo() saves information we can use to identify this ship for
 	*	Debug.Log() when needed.
 	***/
-	public void SetShipInfo(int number, int wave)
+	public void SetShipInfo(int number)
 	{
 		shipNumber = number;
-		waveNumber = wave;
 		Debug.Log(GetShipID() + " info has been set.");
 	}   // SetShipInfo()
 

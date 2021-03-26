@@ -27,7 +27,9 @@ public class GameStatus : MonoBehaviour
 	***/
 
 	TextMeshProUGUI score = null;
-	Scene			currentScene;   // When this doesn't match the current scene, save it and check if we are in Game Over scene
+	TextMeshProUGUI health = null;
+	Player			player = null;
+	Scene           currentScene;   // When this doesn't match the current scene, save it and check if we are in Game Over scene
 
 	/***
 	*		Awake() runs before anything else, including Start().
@@ -61,9 +63,37 @@ public class GameStatus : MonoBehaviour
 	***/
 	public void DisplayScore()
 	{
-		if (score != null)	// Only set if we have a text field to display in
-			score.text = "Score: " + currentScore.ToString();
+		if (score != null)  // Only set if we have a text field to display in
+			score.text = "Score:  " + currentScore.ToString();
 	}   // DisplayScore()
+
+	/***
+	*       DisplayHealth() displays currentScore on the current game screen.
+	***/
+	public void DisplayHealth()
+	{
+		if (player == null)
+		{
+			TextMeshProUGUI[] resultText = FindObjectsOfType<TextMeshProUGUI>();
+
+			player = FindObjectOfType<Player>();
+			health = null;
+
+			for (int i = 0; i < resultText.Length; i++)
+			{   // See if the text field to display health is present
+				if (resultText[i].CompareTag("Health"))
+				{
+					health = resultText[i];
+					break;  // No need to check the rest
+				}   // if
+			}   // for
+		}   // if
+
+		if (health != null)
+		{   // Only set if we have a text field to display in
+			health.text = "Health: " + player.GetHealth();
+		}   // if
+	}   // DisplayHealth()
 
 	/***
     *       Start is used to cache the Level object.
@@ -71,16 +101,16 @@ public class GameStatus : MonoBehaviour
 	void Start()
 	{
 		DisplayScore();
-	}   // Start()
+	}	// Start()
 
-	/***
-    *       Update sets our time scale for this level.
-    *       It also detects if we are on the last scene by checking for a Text
-    *	object with a tag of "Finish".    This is the text that defaults to "You
-    *	Lost!!!".  If the flag is set that you destroyed all the balls on the
-    *	last level it will change the text to "You Won!!!".
-    ***/
-	void Update()
+		/***
+		*       Update() sets our time scale for this level.
+		*       It also detects if we are on the last scene by checking for a
+		*	text object with a tag of "Finish".  This is the text that defaults
+		*	to "You Lost!!!".  If the flag is set that you destroyed all the
+		*	enemies on thelast level it will change the text to "You Won!!!".
+		***/
+		void Update()
 	{
 		Scene thisScene = SceneManager.GetActiveScene();
 
@@ -88,6 +118,9 @@ public class GameStatus : MonoBehaviour
 		if (thisScene != currentScene)
 		{   // This is the first time in this scene
 			currentScene = thisScene;   // Save it so we don't do this again for this scene
+			score = null;
+			health = null;
+			player = null;
 			TextMeshProUGUI[] resultText = FindObjectsOfType<TextMeshProUGUI>();
 			for (int i = 0; i < resultText.Length; i++)
 			{   // See if the text that defaults to "You Lost!" message is present
@@ -100,6 +133,8 @@ public class GameStatus : MonoBehaviour
 					score = resultText[i];
 					DisplayScore();
 				}	// else-if
+				else if (resultText[i].CompareTag("Health"))
+					DisplayHealth();
 			}   // for
 		}   // if
 	}   // Update()

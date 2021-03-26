@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1700274377
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: c403872b47e1df34287622543a595785, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c535f01827e7f2b4697db4090a9c9599, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waveConfig: {fileID: 11400000, guid: 74a7db4d8dc16824e89bac4bc8e5225f, type: 2}
+  waveConfig: {fileID: 11400000, guid: 9bcc3291cf57b5f418113ca94cafad69, type: 2}
   waypoints: []
 --- !u!114 &2299179181209949772
 MonoBehaviour:
@@ -114,9 +114,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   enemyValue: 10
-  shotCounter: 0
+  YPadding: 0.75
   minTimeBetweenShots: 0.2
-  maxTimeBetweenShots: 3
+  maxTimeBetweenShots: 2
   projectile: {fileID: 7723163494949799297, guid: cde66e9404e968b4dab9168e42415e47,
     type: 3}
   bombSpeed: -10
@@ -175,5 +175,5 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0

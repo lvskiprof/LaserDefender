@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7272557364457413903}
   - component: {fileID: 7850561895347844384}
   - component: {fileID: 8026985445093422910}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: PlayerLaser
   m_TagString: Laser
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 379376535
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 5d29be07cbe8b494db89fc632d3cc240, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -97,6 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c96727975819947b32b2f1ffeb2b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explosionVFX: {fileID: 3948047166751560727, guid: 7cbb0db95e461ca46af6ab68b3dd4856,
+    type: 3}
+  durationOfExplosion: 1
+  deathSFX: {fileID: 8300000, guid: f717e2d1dfa1bd641822b35693ea64cf, type: 3}
+  deathSoundVolume: 0.75
 --- !u!50 &7272557364457413903
 Rigidbody2D:
   serializedVersion: 4

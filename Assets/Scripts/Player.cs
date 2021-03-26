@@ -45,17 +45,25 @@ public class Player : MonoBehaviour
     float       yMin;
     float       yMax;
 
+    /***
+	*		Cached component references.
+	***/
+
+    GameStatus  gameStatus;
+
     // Start is called before the first frame update
     void Start()
     {
         SetUpMoveBoundaries();
+        gameStatus = FindObjectOfType<GameStatus>();
     }   // Start()
 
-	// Update is called once per frame
-	void Update()
+    // Update is called once per frame
+    void Update()
     {
         Move();
         Fire();
+        gameStatus.DisplayHealth();
     }   // Update()
 
     /***
@@ -74,17 +82,6 @@ public class Player : MonoBehaviour
     }   // Move
 
     /***
-    *       Fire() will handle firing the laser from the Player ship.
-    ***/
-    private void Fire()
-	{
-        if (Input.GetButtonDown("Fire1"))
-		{
-            StartCoroutine(FireContinuously());
-		}   // if
-	}   // Fire()
-
-    /***
     *     SetUpMoveBoundaries() sets the limits for where our display limits
     *   are based on World coordinates, so it should work on any size screen.
     ***/
@@ -98,6 +95,17 @@ public class Player : MonoBehaviour
     }   // SetUpMoveBoundaries()
 
     /***
+    *       Fire() will handle firing the laser from the Player ship.
+    ***/
+    private void Fire()
+	{
+        if (Input.GetButtonDown("Fire1"))
+		{
+            StartCoroutine(FireContinuously());
+		}   // if
+	}   // Fire()
+
+    /***
     *       FireContinuously() will fire the laser from the Player ship and keep
     *   firing as long as the space bar or mouse button 0 are pressed.  Presumably
     *   it will also work with a joystick, but I don't have one to test with.
@@ -107,8 +115,9 @@ public class Player : MonoBehaviour
         do
         {   // Fire laser and check to see if we should keep firing
             // Things to do before
-            Vector2 laserStart = new Vector2(transform.position.x,
-                transform.position.y + YPadding);   // Start above ship
+            //Vector2 laserStart = new Vector2(transform.position.x,
+            //    transform.position.y + YPadding);   // Start above ship
+            Vector2 laserStart = transform.position;
             GameObject laser = Instantiate(laserPrefab,
                 laserStart,
                 Quaternion.identity) as GameObject;
@@ -127,25 +136,33 @@ public class Player : MonoBehaviour
 	***/
     private void OnTriggerEnter2D(Collider2D other)
     {
-        DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
-        if (damageDealer)
-        {   // Only do this if not NULL (should always happen, but check to be safe)
-            ProcessHit(other, damageDealer);
+        if (!other.CompareTag("Laser") && !other.CompareTag("Player"))
+        {
+            DamageDealer    damageDealer = other.gameObject.GetComponent<DamageDealer>();
+            if (damageDealer)
+            {   // Only do this if not NULL (should always happen, but check to be safe)
+                ProcessHit(other, damageDealer);
+            }   // if
+            else
+            {   // It was NULL, so report it as an error for debuggin purposes
+                Debug.Log("In Player.cs OnTriggerEnter2D(): DamageDealer was NULL.");
+            }   // else
         }   // if
         else
-		{   // It was NULL, so report it as an error for debuggin purposes
-            Debug.Log("In Player.cs OnTriggerEnter2D(): DamageDealer was NULL.");
-		}   // else
+        {   // Report any hit that we are ignoring, in case we ignored something we shouldn't
+            Debug.Log("Ignoring " + gameObject.name + " being hit by " + other.name + ".");
+        }   // else
     }   // OnTriggerEnter2D(Collider2D other)
 
     /***
-	*		ProcessHit() subtracts damage and if the ship is dead it tells DamageDealer
-	*	that it is dead and can be removed.
+	*		ProcessHit() subtracts damage and if the ship is dead it tells
+	*	DamageDealer that it is dead and can be removed.
 	***/
     private void ProcessHit(Collider2D other, DamageDealer damageDealer)
     {
         health -= damageDealer.GetDamage();
         Debug.Log("Player health is now " + health + " after being hit by " + other.name + ".");
+        gameStatus.DisplayHealth();
         if (health <= 0f)
         {
             damageDealer.gameObject.SetActive(false);
@@ -174,4 +191,13 @@ public class Player : MonoBehaviour
         AudioSource.PlayClipAtPoint(deathSFX, Camera.main.transform.position, deathSoundVolume);
         scene.LoadGameOver();
     }	// Die()
+
+    /***
+	*		GetHealth() returns our current health as a string so it can be
+	*	displayed.
+	***/
+    public string GetHealth()
+	{
+        return health.ToString();
+    }   // GetHealth()
 }   // class Player

@@ -18,8 +18,6 @@ public class WaveConfig : ScriptableObject
 	int					numberOfEnemies = 5;
 	[SerializeField]
 	float				moveSpeed = 2f;
-	[SerializeField]
-	int					waveNumber = 0;				// Set in the Unity Editor for each Wave object
 
 	List<GameObject>    enemyShips;
 
@@ -36,7 +34,7 @@ public class WaveConfig : ScriptableObject
 					pathPrefab.transform.position,
 					Quaternion.identity);
 
-			enemyShip.GetComponent<Enemy>().SetShipInfo(ship, waveNumber);
+			enemyShip.GetComponent<Enemy>().SetShipInfo(ship);
 			enemyShip.name = enemyPrefab.name + " #" + ship.ToString() + " in " + this.name;
 			enemyShips.Add(enemyShip);
 		}   // for
@@ -76,7 +74,7 @@ public class WaveConfig : ScriptableObject
 	public float GetMoveSpeed() { return moveSpeed; }
 	public GameObject GetEnemyShip(int ship) 
 	{
-		Debug.Log("WaveConfig line #79, ship = " + ship + ", enemyShips.Count = " + enemyShips.Count + ", for Wave " + waveNumber + ".");
+		Debug.Log("WaveConfig line #79, ship = " + ship + ", enemyShips.Count = " + enemyShips.Count + ", for " + this.name + ".");
 		enemyShips[ship].transform.position = pathPrefab.transform.position;
 		Debug.Log(enemyShips[ship].GetComponent<Enemy>().GetShipID() + " was created.");
 		//enemyShips[ship].SetActive(true);	// Make it active now that we are using it

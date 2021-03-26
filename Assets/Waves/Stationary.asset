@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 459911b59bb0a82418a3465819c95726, type: 3}
-  m_Name: Wave 4
+  m_Name: Stationary
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 4233061014918993433, guid: cf8009d7bddd1274798406003336e044,
     type: 3}
@@ -20,4 +20,3 @@ MonoBehaviour:
   spawnRandomFactor: 0.3
   numberOfEnemies: 1
   moveSpeed: 8
-  waveNumber: 4
