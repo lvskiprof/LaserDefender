@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 600
   enemyValue: 60
-  YPadding: 0.75
+  yPadding: 0.75
   minTimeBetweenShots: 1.5
   maxTimeBetweenShots: 2.5
   projectile: {fileID: 7723163494949799297, guid: 1671e5e7ff8ba3f4894c0cb0ac2c7e14,
@@ -126,7 +126,7 @@ MonoBehaviour:
   durationOfExplosion: 1
   deathSFX: {fileID: 8300000, guid: f717e2d1dfa1bd641822b35693ea64cf, type: 3}
   deathSoundVolume: 0.75
-  bombDropSFX: {fileID: 8300000, guid: 6695cbf6dc548a244b2022de3bc2ac12, type: 3}
+  bombDropSfx: {fileID: 8300000, guid: 90a643021cc14c240a1cd4be16f23e6e, type: 3}
   bombSoundVolume: 0.75
 --- !u!58 &4651785669573738260
 CircleCollider2D:
