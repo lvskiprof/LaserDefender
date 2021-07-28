@@ -103,14 +103,14 @@ public class GameStatus : MonoBehaviour
 		DisplayScore();
 	}	// Start()
 
-		/***
-		*       Update() sets our time scale for this level.
-		*       It also detects if we are on the last scene by checking for a
-		*	text object with a tag of "Finish".  This is the text that defaults
-		*	to "You Lost!!!".  If the flag is set that you destroyed all the
-		*	enemies on thelast level it will change the text to "You Won!!!".
-		***/
-		void Update()
+	/***
+	*       Update() sets our time scale for this level.
+	*       It also detects if we are on the last scene by checking for a
+	*	text object with a tag of "Finish".  This is the text that defaults
+	*	to "You Lost!!!".  If the flag is set that you destroyed all the
+	*	enemies on thelast level it will change the text to "You Won!!!".
+	***/
+	void Update()
 	{
 		Scene thisScene = SceneManager.GetActiveScene();
 

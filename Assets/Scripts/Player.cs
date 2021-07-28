@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     float       projectileSpeed = 10f;
     [SerializeField]
     float       projectileFiringPeriod = 0.25f;
+    bool        isFiring = false;
 
     [Header("VFX")]
     [SerializeField]
@@ -99,7 +100,7 @@ public class Player : MonoBehaviour
     ***/
     private void Fire()
 	{
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !isFiring)
 		{
             StartCoroutine(FireContinuously());
 		}   // if
@@ -112,6 +113,8 @@ public class Player : MonoBehaviour
     ***/
     private IEnumerator FireContinuously()
     {
+        isFiring = true;
+
         do
         {   // Fire laser and check to see if we should keep firing
             // Things to do before
@@ -128,6 +131,8 @@ public class Player : MonoBehaviour
             // Things to do afterwards
             //Debug.Log("Checking to see if we should keep firing, boss");
         } while (Input.GetButton("Fire1"));
+
+        isFiring = false;
         //Debug.Log("Firing has ceased, boss");
     }   //    FireContinuously()
 
